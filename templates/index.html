@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grammar AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+    <h1>✨ Grammar Correction AI</h1>
+
+    <textarea id="text" placeholder="Type your sentence..."></textarea>
+
+    <button onclick="checkText()">Correct Grammar</button>
+
+    <div id="output"></div>
+</div>
+
+<script>
+function checkText() {
+    let text = document.getElementById("text").value;
+
+    fetch("/check", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({text: text})
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("output").innerHTML =
+            "<h3>Corrected:</h3>" + data.result;
+    });
+}
+</script>
+
+</body>
+</html>
